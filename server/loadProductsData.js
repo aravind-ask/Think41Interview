@@ -31,9 +31,14 @@ function loadCSVData() {
   fs.createReadStream(path.join(__dirname, "products.csv"))
     .pipe(csv())
     .on("data", (data) => {
-      // Parse numeric fields
+      // Parse numeric fields and validate id
+      const idNum = Number(data.id);
+      if (isNaN(idNum)) {
+        console.warn(`Skipping product with invalid id: ${data.id}`);
+        return; // skip this row
+      }
       const parsed = {
-        id: Number(data.id),
+        id: idNum,
         cost: parseFloat(data.cost),
         category: data.category,
         name: data.name,
