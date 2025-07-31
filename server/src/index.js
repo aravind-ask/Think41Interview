@@ -25,7 +25,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 app.use("/api/products", productRoutes)
-app.use("/api/department", departmentRoutes)
+app.use("/api/departments", departmentRoutes)
 
 //server
 app.listen(PORT, () => {
