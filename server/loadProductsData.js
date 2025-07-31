@@ -13,7 +13,6 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 
-// MongoDB connection URI
 const MONGO_URI = process.env.MONGO_URI;
 
 mongoose.connect(MONGO_URI, {
@@ -31,11 +30,10 @@ function loadCSVData() {
   fs.createReadStream(path.join(__dirname, "products.csv"))
     .pipe(csv())
     .on("data", (data) => {
-      // Parse numeric fields and validate id
       const idNum = Number(data.id);
       if (isNaN(idNum)) {
         console.warn(`Skipping product with invalid id: ${data.id}`);
-        return; // skip this row
+        return; 
       }
       const parsed = {
         id: idNum,
@@ -49,7 +47,6 @@ function loadCSVData() {
         distribution_center_id: Number(data.distribution_center_id),
       };
       results.push(parsed);
-    })
     .on("end", async () => {
       try {
         await Product.insertMany(results);
