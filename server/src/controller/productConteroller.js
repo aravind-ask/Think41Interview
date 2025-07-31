@@ -3,8 +3,21 @@ import Department from "../models/Departments.js";
 
 export const getProducts = async (req, res) => {
   try {
-    const products = await Product.find({}).limit(10);
-    res.status(200).json(products);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const total = await Product.countDocuments({});
+    const products = await Product.find({})
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      products,
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
