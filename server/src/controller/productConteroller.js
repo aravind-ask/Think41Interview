@@ -1,4 +1,5 @@
 import Product from "../models/Products.js";
+import Department from "../models/Departments.js";
 
 export const getProducts = async (req, res) => {
   try {
