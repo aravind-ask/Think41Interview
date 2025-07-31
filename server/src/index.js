@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import morgan from "morgan";
 import productRoutes from "./routes/productRoutes.js";
+import departmentRoutes from "./routes/departmentRoutes.js";
 
 dotenv.config();
 
@@ -24,6 +25,7 @@ mongoose.connection.on("error", (err) => {
 });
 
 app.use("/api/products", productRoutes)
+app.use("/api/department", departmentRoutes)
 
 //server
 app.listen(PORT, () => {
