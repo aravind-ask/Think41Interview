@@ -32,20 +32,22 @@ const ProductDetails = () => {
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
         }}>
           <tbody>
-            {Object.entries(product)
-              .filter(([key]) => !['_id', 'distribution_center_id', '__v'].includes(key))
-              .map(([key, value]) => (
-                <tr key={key} style={{ borderBottom: '1px solid #ddd' }}>
-                  <th style={{
-                    textAlign: 'left',
-                    padding: '8px',
-                    backgroundColor: '#f4f4f40a',
-                    width: '40%',
-                    textTransform: 'capitalize'
-                  }}>{key.replace(/_/g, ' ')}</th>
-                  <td style={{ padding: '8px' }}>{String(value)}</td>
-                </tr>
-              ))}
+{Object.entries(product)
+  .filter(([key]) => !['_id', 'distribution_center_id', '__v'].includes(key))
+  .map(([key, value]) => (
+    <tr key={key} style={{ borderBottom: '1px solid #ddd' }}>
+      <th style={{
+        textAlign: 'left',
+        padding: '8px',
+        backgroundColor: '#f4f4f40a',
+        width: '40%',
+        textTransform: 'capitalize'
+      }}>{key.replace(/_/g, ' ')}</th>
+      <td style={{ padding: '8px' }}>
+        {key === 'department' && value && typeof value === 'object' ? value.name : String(value)}
+      </td>
+    </tr>
+  ))}
           </tbody>
         </table>
       ) : (
